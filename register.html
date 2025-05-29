@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<h2>Register</h2>
+<form method="POST" action="{{ url_for('register') }}" class="needs-validation" novalidate>
+    {{ form.hidden_tag() }}  <!-- CSRF Token -->
+    
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        {{ form.username(class="form-control", required=True) }} <!-- Using Flask-WTF form fields -->
+        <div class="invalid-feedback">Please enter a username.</div>
+        {% if form.username.errors %}
+            <ul>
+                {% for error in form.username.errors %}
+                    <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        {{ form.email(class="form-control", required=True) }}
+        <div class="invalid-feedback">Please enter a valid email.</div>
+        {% if form.email.errors %}
+            <ul>
+                {% for error in form.email.errors %}
+                    <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        {{ form.password(class="form-control", required=True) }}
+        <div class="invalid-feedback">Please enter a password.</div>
+        {% if form.password.errors %}
+            <ul>
+                {% for error in form.password.errors %}
+                    <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+<script>
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+
+{% endblock %}

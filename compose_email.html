@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Compose Email{% endblock %}
+{% block content %}
+<h2>Compose Encrypted Email</h2>
+
+<form method="POST" class="needs-validation" novalidate>
+    {{ form.hidden_tag() }} <!-- CSRF Token -->
+
+    <div class="mb-3">
+        <label for="receiver" class="form-label">Receiver Email</label>
+        {{ form.receiver(class="form-control", id="receiver", required=True) }}
+        <div class="invalid-feedback">Please enter receiver's email.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        {{ form.message(class="form-control", id="message", rows="5", required=True) }}
+        <div class="invalid-feedback">Please enter a message.</div>
+    </div>
+
+    <button type="submit" name="send" class="btn btn-primary">Send Encrypted Email</button>
+    <button type="submit" name="save_as_draft" value="1" class="btn btn-secondary">Save as Draft</button>
+</form>
+
+<script>
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+{% endblock %}

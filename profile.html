@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="mt-5" style="max-width: 500px; margin: auto;">
+  <h2>User Profile</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><strong>Username:</strong> {{ user.username }}</li>
+    <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+  </ul>
+
+  <!-- Optional: Add 2FA details or any additional user settings -->
+  <div class="mt-3">
+    <a href="{{ url_for('reauth') }}" class="btn btn-warning">Reauthenticate</a>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+  </div>
+</div>
+{% endblock %}

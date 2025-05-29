@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}2FA Verification{% endblock %}
+
+{% block content %}
+<h2>2FA Verification</h2>
+<form method="POST" action="{{ url_for('verify_2fa') }}">
+    {{ form.hidden_tag() }}  <!-- CSRF Token -->
+    
+    <div class="mb-3">
+        <label for="code" class="form-label">Enter 2FA Code</label>
+        {{ form.code(class="form-control", required=True) }}  <!-- 2FA Code Field -->
+        <div class="invalid-feedback">Please enter the 6-digit code from your authenticator app.</div>
+        {% if form.code.errors %}
+            <ul>
+                {% for error in form.code.errors %}
+                    <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Verify</button>
+</form>
+
+<script>
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+
+{% endblock %}
